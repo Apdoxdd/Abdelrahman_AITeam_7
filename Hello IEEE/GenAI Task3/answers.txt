@@ -1,0 +1,19 @@
+Q1. token id doesnt mean anything on its own, its just a row number in a lookup table. depends on when the word got added to the vocab (mostly frequency) not on meaning. embeddings are actually learned so distance between them means somthing, ids dont work that way
+
+Q2. "kubernetes" got split up, bert never saw that word whole so it breaks it into peices it does know, like ku ##ber ##net ##es. common words stay whole, rare ones get chopped
+
+Q3. shape is (5, 384), stays same size no matter how long the sentence is cause the model pools everything into one fixed summary at the end
+
+Q4. no single number means anything alone, dimension 217 isnt "about animals" or w/e. its the pattern across all 384 numbers together thats encodes the meaning, kinda like pixels in a photo
+
+Q5. pair 0-1 barely shares words but scores high cause model matches meaning not spelling, cat and feline basically mean the same thing so vectors land close even tho words are diff
+
+Q6. pair 5-6 shares the literal word "bank" but scores lower than pairs with zero shared words. shows the model cares about meaning not spelling, bank means two totally diff things in river sentence vs loan sentence so even same word doesnt make them semanticaly close
+
+Q7. same word diff sentence score (bank river vs bank loan) usually lands around 0.5-0.6, control score (bank vs river same sentence) usually comes out lower. shows bert keeps some "bank-ness" no matter the sentence but context still shifts it around, doesnt fully wipe it
+
+Q8. would be exactly 1.000 no question, word2vec doesnt read the sentence at all its just one fixed row for "bank" so comparing it to itself always gives 1
+
+Q9. search engines are a good example, if you search "jaguar" a static embedding cant tell if you mean the animal or the car since its one vector for that word period. contextual model looks at rest of the query like "jaguar habitat" vs "jaguar price" and can actually seperate those meanings, static cant do that at all
+
+Q10. static embedding is basicaly a dictionary lookup, one word one vector forever no matter the sentence. contextual embedding gets recomputed each time based on whats around it so same word can land in slightly diff spots depending on context. saw this in D1, the two bank vectors werent identical (word2vec woulda forced 1.000) but they also wernt totally unrelated, still closer to each other then to a genuinely diff word in the same sentence. so context nudges the vector, doesnt throw out the words base meaning completely
